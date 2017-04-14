@@ -2,6 +2,13 @@
 # Docker alias and function
 # ------------------------------------
 
+
+# Use Docker Machine
+alias dm="docker-machine"
+
+# Use Docker compose
+alias doc="docker-compose"
+
 # Get latest container ID
 alias dl="docker ps -l -q"
 
@@ -41,8 +48,14 @@ dri() { docker rmi $(docker images -q); }
 # Dockerfile build, e.g., $dbu tcnksm/test 
 dbu() { docker build -t=$1 .; }
 
-# Show all alias related docker
-dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
-
 # Bash into running container
 dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
+
+# View dangling volumes
+alias dvol='docker volume ls -qf dangling=true'
+
+# Remove dangling volumes 
+alias dvolrm='docker volume rm $(docker volume ls -qf dangling=true)'
+
+# Show all alias related docker
+dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
